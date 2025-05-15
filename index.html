@@ -1,1 +1,85 @@
-Hello world
+<meta charset="UTF-8">
+<title>Гайд по использованию Gitea сервера</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Гайд по использованию Gitea сервера">
+<meta name="author" content="serega404">
+<meta name="robots" content="noindex, nofollow">
+
+<style>
+    code {
+        background-color: #21262d;
+        color: #c9d1d9;
+        padding: 2px 4px;
+        border-radius: 6px;
+    }
+
+    body {
+        margin-top: 20px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #010409;
+        color: white
+    }
+
+    h1 {
+        text-align: center;
+    }
+</style>
+
+<!-- Body содержит преобразованный markdown в HTML -->
+<body>
+    <h1>Гайд по использованию Gitea сервера</h1>
+    <ol>
+        <li><p>Для начала нужно зарегистрироваться в ZTC Id/RDC Auth/SKBKIT Id, для этого нужно написать администратору и отправить свой логин (который хотите), почту и имя фамилию.</p>
+        </li>
+        <li><p>Далее администратор сообщит логин и пароль, после чего вы сможете зайти на сайт <code>https://git.&lt;домен&gt;.ru</code> и зарегистрироваться там, используя свой логин и почту.</p>
+        </li>
+    </ol>
+    <img src="./imgs/mainpagegit.png" style="width:70%; display: block; margin: auto;" size="100%" alt="Основная страница" />
+    
+    <center>Затем выбираем своего провайдера аунтефикации</center>
+    
+    <img src="./imgs/loginpage.png" style="width:70%; display: block; margin: auto;" alt="Выбор провайдера аунтефикации" />
+    
+    <p>Вводим свой логин и пароль. После чего вам будет предложено сменить пароль на свой. (Пароли хорошо защищены, посмотреть после смены их никто не сможет, только сбросить на новый)</p>
+    <h2>Настройка клиента</h2>
+    <p>Так как не все Git клиенты поддерживают аунтефикацию через SSO, то для работы с ними нужно использовать токены доступа. Это делается для того, чтобы не передавать свой логин и пароль в клиенте, а использовать токен, который можно легко отозвать в случае компрометации.</p>
+    <p><code>Официальный консольный клиент Git поддерживает аунтефикацию через SSO, поэтому для него токены не нужны.</code> </p>
+    <p>Для использования клиентов Git, таких как Github Desktop, GitKraken и других, необходимо использовать токены доступа. Для этого нужно зайти в настройки своего профиля (в правом верхнем углу) и выбрать раздел &quot;Приложения&quot;.</p>
+    <img src="./imgs/profilemenu.png" style="width:50%; display: block; margin: auto;" alt="Меню пользователя" />
+    
+    <ol>
+        <li>Переходим в раздел <code>Приложения</code></li>
+        <li>Вводим название токена (например, &quot;Github desktop&quot;)</li>
+        <li>Раскрываем меню <code>Выбрать разрешения</code></li>
+        <li>Выбираем разрешения, которые нужны (для отправки коммитов ставим &quot;<code>repository</code>:<code>Чтение и запись</code>&quot;)</li>
+        <li>Нажимаем <code>Генерировать токен</code></li>
+    </ol>
+    <img src="./imgs/createapptoken.png" style="width:100%;display: block; margin: auto;" alt="Меню пользователя" />
+    
+    <p>Теперь сохраняем токен в безопасном месте, так как он будет показан только один раз. Если вы его потеряете, то придется создавать новый.</p>
+    <img src="./imgs/createdtoken.png" style="width:100%; display: block; margin: auto;" alt="Созданный токен" />
+    
+    <h2>Пример использования</h2>
+    <p>Для примера будет использовать <a href="https://github.com/apps/desktop">GitHub Desktop</a> (так как он беслатный и с открытым кодом), но в других клиентах все аналогично.</p>
+    <img src="./imgs/githubdesktopstart.png" style="width:70%; display: block; margin: auto;" alt="Начальный экран Github Desktop" />
+    
+    <center>При первом запуске вам будет предложено войти в свой Github аккаунт, этот шаг по желанию можно пропустить.</center>
+    
+    <br>
+    
+    <p>Далее необходимо указать Имя Фамилию и почту для подписи коммитов.</p>
+    <p>Жмём Finish и видим главный экран приложения, так как скорее всего репозиторий уже существует, нужно склонировать его. Для этого нажимаем <code>File</code> -&gt; <code>Clone repository</code> или <code>Ctrl + Shift + O</code> (или <code>Cmd + Shift + O</code> на MacOS).</p>
+    <img src="./imgs/githubdesktopmenu.png" style="width:30%; display: block; margin: auto;" alt="Меню github desktop" />
+    
+    <p>Теперь выбираем вкладку <code>URL</code> и вставляем ссылку на репозиторий, который вы хотите склонировать. Ссылка должна выглядеть примерно так: <code>https://git.&lt;домен&gt;.ru/&lt;владелец&gt;/&lt;ваш репозиторий&gt;</code></p>
+    <img src="./imgs/githubdesktopclone.png" style="width:50%; display: block; margin: auto;" alt="Окно клонирования" />
+    
+    <p>После этого нажимаем <code>Clone</code> и вводим свои данные для аунтефикации. Логин будет ваш логин, а <code>пароль = токен</code>, который вы создали ранее.</p>
+    <img src="./imgs/githubdesktoplogin.png" style="width:50%; display: block; margin: auto;" alt="Окно аунтефикации" />
+    
+    <p>Теперь вы сможете работать с ним как обычно.</p>
+    <p>Только не забывайте, нажимать кнопку <code>Fetch origin</code> что бы не потерять изменения других участников репозитория.</p>
+</body>
